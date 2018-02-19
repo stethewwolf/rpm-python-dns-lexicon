@@ -1,6 +1,12 @@
 # Created by pyp2rpm-3.2.2
 %global pypi_name dns-lexicon
 
+%if 0%{?rhel} && 0%{?rhel} <= 7
+%bcond_with python3
+%else
+%bcond_without python3
+%endif
+
 Name:           python-%{pypi_name}
 Version:        2.1.19
 Release:        1%{?dist}
@@ -15,11 +21,13 @@ BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-future
 BuildRequires:  python2-tldextract
- 
+
+%if %{with python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-future
 BuildRequires:  python3-tldextract
+%endif
 
 %description
 Manipulate DNS records on various DNS providers in
@@ -44,6 +52,7 @@ DNS records on multiple DNS providers in a standardized way. Lexicon has a CLI
 but it can also be used as a python library.Lexicon was designed to be used
 in...
 
+%if %{with python3}
 %package -n     python3-%{pypi_name}
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{pypi_name}}
@@ -59,7 +68,7 @@ a standardized/agnostic way. Introduction Lexicon provides a way to manipulate
 DNS records on multiple DNS providers in a standardized way. Lexicon has a CLI
 but it can also be used as a python library.Lexicon was designed to be used
 in...
-
+%endif
 
 %prep
 %autosetup -n %{pypi_name}-%{version}
@@ -68,14 +77,20 @@ rm -rf %{pypi_name}.egg-info
 
 %build
 %py2_build
+
+%if %{with python3}
 %py3_build
+%endif
 
 %install
 # Must do the subpackages' install first because the scripts in /usr/bin are
 # overwritten with every setup.py install.
+
+%if %{with python3}
 %py3_install
 cp %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python3_version}
 ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
+%endif
 
 %py2_install
 cp %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python2_version}
@@ -90,6 +105,7 @@ ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
 %{python2_sitelib}/lexicon
 %{python2_sitelib}/dns_lexicon-%{version}-py?.?.egg-info
 
+%if %{with python3}
 %files -n python3-%{pypi_name}
 %license LICENSE
 %doc README.md
@@ -97,6 +113,7 @@ ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
 %{_bindir}/lexicon-%{python3_version}
 %{python3_sitelib}/lexicon
 %{python3_sitelib}/dns_lexicon-%{version}-py?.?.egg-info
+%endif
 
 %changelog
 * Mon Feb 19 2018 Nick Bebout <nb@fedoraproject.org> - 2.1.19-1
