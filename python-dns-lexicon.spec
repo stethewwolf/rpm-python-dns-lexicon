@@ -77,7 +77,6 @@ rm -rf %{pypi_name}.egg-info
 
 %build
 %py2_build
-
 %if %{with python3}
 %py3_build
 %endif
@@ -86,20 +85,22 @@ rm -rf %{pypi_name}.egg-info
 # Must do the subpackages' install first because the scripts in /usr/bin are
 # overwritten with every setup.py install.
 
+%py2_install
+cp %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python2_version}
+ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
+
 %if %{with python3}
 %py3_install
 cp %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python3_version}
 ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
-%py2_install
-cp %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python2_version}
-ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
-
 %files -n python2-%{pypi_name}
 %license LICENSE
 %doc README.md
+%if ! %{with python3}
 %{_bindir}/lexicon
+%endif
 %{_bindir}/lexicon-2
 %{_bindir}/lexicon-%{python2_version}
 %{python2_sitelib}/lexicon
@@ -109,6 +110,7 @@ ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
 %files -n python3-%{pypi_name}
 %license LICENSE
 %doc README.md
+%{_bindir}/lexicon
 %{_bindir}/lexicon-3
 %{_bindir}/lexicon-%{python3_version}
 %{python3_sitelib}/lexicon
@@ -118,6 +120,7 @@ ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
 %changelog
 * Sat Mar 24 2018 Eli Young <elyscape@gmail.com> - 2.2.1-1
 - Update to 2.2.1
+- Use Python 3 by default when available
 
 * Mon Feb 19 2018 Nick Bebout <nb@fedoraproject.org> - 2.1.19-1
 - Initial package.
