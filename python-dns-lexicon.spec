@@ -8,7 +8,7 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        2.1.19
+Version:        2.2.1
 Release:        1%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
@@ -116,5 +116,8 @@ ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
 %endif
 
 %changelog
+* Sat Mar 24 2018 Eli Young <elyscape@gmail.com> - 2.2.1-1
+- Update to 2.2.1
+
 * Mon Feb 19 2018 Nick Bebout <nb@fedoraproject.org> - 2.1.19-1
 - Initial package.
