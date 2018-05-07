@@ -8,7 +8,7 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        2.2.2
+Version:        2.2.3
 Release:        1%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
@@ -118,6 +118,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Mon May 07 2018 Eli Young <elyscape@gmail.com> - 2.2.3-1
+- Update to 2.2.3 (#1575598)
+
 * Thu May 03 2018 Eli Young <elyscape@gmail.com> - 2.2.2-1
 - Update to 2.2.2 (#1574265)
 
