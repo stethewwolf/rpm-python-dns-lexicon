@@ -8,8 +8,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        2.4.0
-Release:        2%{?dist}
+Version:        2.4.3
+Release:        1%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
@@ -118,6 +118,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Tue Jun 19 2018 Eli Young <elyscape@gmail.com> - 2.4.3-1
+- Update to 2.4.3 (#1592158)
+
 * Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.4.0-2
 - Rebuilt for Python 3.7
 
