@@ -9,14 +9,16 @@
 
 Name:           python-%{pypi_name}
 Version:        2.4.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
 URL:            https://github.com/AnalogJ/lexicon
 Source0:        https://files.pythonhosted.org/packages/source/d/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 BuildArch:      noarch
- 
+
+Patch0:         remove-shebang.patch
+
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-future
@@ -39,7 +41,7 @@ in...
 %package -n     python2-%{pypi_name}
 Summary:        %{summary}
 %{?python_provide:%python_provide python2-%{pypi_name}}
- 
+
 Requires:       python2-requests
 Requires:       python2-tldextract
 Requires:       python2-future
@@ -56,7 +58,7 @@ in...
 %package -n     python3-%{pypi_name}
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{pypi_name}}
- 
+
 Requires:       python3-requests
 Requires:       python3-tldextract
 Requires:       python3-future
@@ -71,7 +73,7 @@ in...
 %endif
 
 %prep
-%autosetup -n %{pypi_name}-%{version}
+%autosetup -p1 -n %{pypi_name}-%{version}
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
@@ -118,6 +120,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Tue Jun 26 2018 Eli Young <elyscape@gmail.com> - 2.4.4-2
+- Remove unnecessary shebang
+
 * Tue Jun 26 2018 Eli Young <elyscape@gmail.com> - 2.4.4-1
 - Update to 2.4.4 (#1594777)
 
