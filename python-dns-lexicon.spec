@@ -1,4 +1,3 @@
-# Created by pyp2rpm-3.2.2
 %global pypi_name dns-lexicon
 
 %if 0%{?rhel} && 0%{?rhel} <= 7
@@ -32,11 +31,9 @@ BuildRequires:  python3-tldextract
 %endif
 
 %description
-Manipulate DNS records on various DNS providers in
-a standardized/agnostic way. Introduction Lexicon provides a way to manipulate
-DNS records on multiple DNS providers in a standardized way. Lexicon has a CLI
-but it can also be used as a python library.Lexicon was designed to be used
-in...
+Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
+standardized way. Lexicon has a CLI but it can also be used as a python
+library.
 
 %package -n     python2-%{pypi_name}
 Summary:        %{summary}
@@ -48,11 +45,11 @@ Requires:       python2-future
 Requires:       python2-setuptools
 
 %description -n python2-%{pypi_name}
-Manipulate DNS records on various DNS providers in
-a standardized/agnostic way. Introduction Lexicon provides a way to manipulate
-DNS records on multiple DNS providers in a standardized way. Lexicon has a CLI
-but it can also be used as a python library.Lexicon was designed to be used
-in...
+Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
+standardized way. Lexicon has a CLI but it can also be used as a python
+library.
+
+This is the Python 2 version of the package.
 
 %if %{with python3}
 %package -n     python3-%{pypi_name}
@@ -65,11 +62,11 @@ Requires:       python3-future
 Requires:       python3-setuptools
 
 %description -n python3-%{pypi_name}
-Manipulate DNS records on various DNS providers in
-a standardized/agnostic way. Introduction Lexicon provides a way to manipulate
-DNS records on multiple DNS providers in a standardized way. Lexicon has a CLI
-but it can also be used as a python library.Lexicon was designed to be used
-in...
+Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
+standardized way. Lexicon has a CLI but it can also be used as a python
+library.
+
+This is the Python 3 version of the package.
 %endif
 
 %prep
@@ -84,16 +81,13 @@ rm -rf %{pypi_name}.egg-info
 %endif
 
 %install
-# Must do the subpackages' install first because the scripts in /usr/bin are
-# overwritten with every setup.py install.
-
 %py2_install
-cp %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python2_version}
+install -pm 0755 %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python2_version}
 ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
 
 %if %{with python3}
 %py3_install
-cp %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python3_version}
+install -pm 0755 %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python3_version}
 ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
