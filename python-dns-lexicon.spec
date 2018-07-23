@@ -7,7 +7,7 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        2.4.5
+Version:        2.7.0
 Release:        1%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
@@ -114,6 +114,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Mon Jul 23 2018 Nick Bebout <nb@fedoraproject.org> - 2.7.0-1
+- Update to 2.7.0
+
 * Tue Jul 10 2018 Eli Young <elyscape@gmail.com> - 2.4.5-1
 - Update to 2.4.5 (#1599479)
 
