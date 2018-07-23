@@ -117,6 +117,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 * Mon Jul 23 2018 Nick Bebout <nb@fedoraproject.org> - 2.7.0-1
 - Update to 2.7.0
 
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Tue Jul 10 2018 Eli Young <elyscape@gmail.com> - 2.4.5-1
 - Update to 2.4.5 (#1599479)
 
