@@ -8,7 +8,7 @@
 
 Name:           python-%{pypi_name}
 Version:        2.7.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
@@ -20,12 +20,14 @@ Patch0:         remove-shebang.patch
 
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
+BuildRequires:  python2-cryptography
 BuildRequires:  python2-future
 BuildRequires:  python2-tldextract
 
 %if %{with python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+BuildRequires:  python3-cryptography
 BuildRequires:  python3-future
 BuildRequires:  python3-tldextract
 %endif
@@ -39,10 +41,11 @@ library.
 Summary:        %{summary}
 %{?python_provide:%python_provide python2-%{pypi_name}}
 
-Requires:       python2-requests
-Requires:       python2-tldextract
+Requires:       python2-cryptography
 Requires:       python2-future
+Requires:       python2-requests
 Requires:       python2-setuptools
+Requires:       python2-tldextract
 
 %description -n python2-%{pypi_name}
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
@@ -56,10 +59,11 @@ This is the Python 2 version of the package.
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{pypi_name}}
 
-Requires:       python3-requests
-Requires:       python3-tldextract
+Requires:       python3-cryptography
 Requires:       python3-future
+Requires:       python3-requests
 Requires:       python3-setuptools
+Requires:       python3-tldextract
 
 %description -n python3-%{pypi_name}
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
@@ -114,6 +118,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Mon Aug 27 2018 Eli Young <elyscape@gmail.com> - 2.7.0-2
+- Add dependency on python-cryptography (#1622418)
+
 * Mon Jul 23 2018 Nick Bebout <nb@fedoraproject.org> - 2.7.0-1
 - Update to 2.7.0
 
