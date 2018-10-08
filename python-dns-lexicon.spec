@@ -7,8 +7,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        2.7.0
-Release:        2%{?dist}
+Version:        2.7.9
+Release:        1%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
@@ -118,6 +118,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Mon Oct 08 2018 Eli Young <elyscape@gmail.com> - 2.7.9-1
+- Update to 2.7.9 (#1637142)
+
 * Mon Aug 27 2018 Eli Young <elyscape@gmail.com> - 2.7.0-2
 - Add dependency on python-cryptography (#1622418)
 
