@@ -1,0 +1,13 @@
+diff --git a/setup.py b/setup.py
+index ab653e3..40035eb 100644
+--- a/setup.py
++++ b/setup.py
+@@ -81,7 +81,7 @@ setup(
+     # your project is installed. For an analysis of "install_requires" vs pip's
+     # requirements files see:
+     # https://packaging.python.org/en/latest/requirements.html
+-    install_requires=['requests[security]', 'tldextract', 'future', 'cryptography', 'pyyaml'],
++    install_requires=['requests', 'tldextract', 'future', 'cryptography', 'pyyaml'],
+ 
+     # Each dependency group in extras_require should match a provider name
+     # When adding a new depenency group here, please ensure that it has been

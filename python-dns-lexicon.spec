@@ -7,7 +7,7 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        2.7.9
+Version:        3.0.2
 Release:        1%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
@@ -16,19 +16,33 @@ URL:            https://github.com/AnalogJ/lexicon
 Source0:        https://files.pythonhosted.org/packages/source/d/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 BuildArch:      noarch
 
-Patch0:         remove-shebang.patch
+Patch0:         0000-remove-shebang.patch
+
+%if 0%{?rhel} && 0%{?rhel} <= 7
+Patch1:         0001-fix-requirements.patch
+%endif
 
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-cryptography
 BuildRequires:  python2-future
+BuildRequires:  python2-pyyaml
 BuildRequires:  python2-tldextract
+
+%if 0%{?rhel} && 0%{?rhel} <= 7
+# EL7 has an unversioned name for this packages
+BuildRequires:  pyOpenSSL
+%else
+BuildRequires:  python2-pyOpenSSL
+%endif
 
 %if %{with python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-cryptography
 BuildRequires:  python3-future
+BuildRequires:  python3-pyOpenSSL
+BuildRequires:  python3-pyyaml
 BuildRequires:  python3-tldextract
 %endif
 
@@ -45,7 +59,15 @@ Requires:       python2-cryptography
 Requires:       python2-future
 Requires:       python2-requests
 Requires:       python2-setuptools
+Requires:       python2-pyyaml
 Requires:       python2-tldextract
+
+%if 0%{?rhel} && 0%{?rhel} <= 7
+# EL7 has an unversioned name for this packages
+Requires:       pyOpenSSL
+%else
+Requires:       python2-pyOpenSSL
+%endif
 
 %description -n python2-%{pypi_name}
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
@@ -63,6 +85,8 @@ Requires:       python3-cryptography
 Requires:       python3-future
 Requires:       python3-requests
 Requires:       python3-setuptools
+Requires:       python3-pyOpenSSL
+Requires:       python3-pyyaml
 Requires:       python3-tldextract
 
 %description -n python3-%{pypi_name}
@@ -118,6 +142,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Wed Nov 14 2018 Eli Young <elyscape@gmail.com> - 3.0.2-1
+- Update to 3.0.2
+
 * Mon Oct 08 2018 Eli Young <elyscape@gmail.com> - 2.7.9-1
 - Update to 2.7.9 (#1637142)
 
