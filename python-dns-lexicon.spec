@@ -8,7 +8,7 @@
 
 Name:           python-%{pypi_name}
 Version:        3.0.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
@@ -42,8 +42,14 @@ BuildRequires:  python3-setuptools
 BuildRequires:  python3-cryptography
 BuildRequires:  python3-future
 BuildRequires:  python3-pyOpenSSL
-BuildRequires:  python3-pyyaml
 BuildRequires:  python3-tldextract
+
+%if 0%{?fedora} && 0%{?fedora} <= 28
+BuildRequires:  python3-PyYAML
+%else
+BuildRequires:  python3-pyyaml
+%endif
+
 %endif
 
 %description
@@ -86,8 +92,13 @@ Requires:       python3-future
 Requires:       python3-requests
 Requires:       python3-setuptools
 Requires:       python3-pyOpenSSL
-Requires:       python3-pyyaml
 Requires:       python3-tldextract
+
+%if 0%{?fedora} && 0%{?fedora} <= 28
+Requires:       python3-PyYAML
+%else
+Requires:       python3-pyyaml
+%endif
 
 %description -n python3-%{pypi_name}
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
@@ -142,6 +153,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Wed Nov 14 2018 Eli Young <elyscape@gmail.com> - 3.0.2-2
+- Fix dependencies on Fedora 28
+
 * Wed Nov 14 2018 Eli Young <elyscape@gmail.com> - 3.0.2-1
 - Update to 3.0.2
 
