@@ -7,8 +7,8 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        3.0.2
-Release:        2%{?dist}
+Version:        3.0.6
+Release:        1%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
@@ -153,6 +153,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Fri Dec 14 2018 Eli Young <elyscape@gmail.com> - 3.0.6-1
+- Update to 3.0.6
+
 * Wed Nov 14 2018 Eli Young <elyscape@gmail.com> - 3.0.2-2
 - Fix dependencies on Fedora 28
 
