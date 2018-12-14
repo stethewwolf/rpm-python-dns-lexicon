@@ -75,6 +75,14 @@ Requires:       pyOpenSSL
 Requires:       python2-pyOpenSSL
 %endif
 
+# Both packages install a Python module named lexicon
+# TODO: Remove this once resolved upstream (see upstream #222)
+%if 0%{?rhel} && 0%{?rhel} <= 7
+Conflicts:      python-lexicon
+%else
+Conflicts:      python2-lexicon
+%endif
+
 %description -n python2-%{pypi_name}
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
 standardized way. Lexicon has a CLI but it can also be used as a python
@@ -99,6 +107,10 @@ Requires:       python3-PyYAML
 %else
 Requires:       python3-pyyaml
 %endif
+
+# Both packages install a Python module named lexicon
+# TODO: Remove this once resolved upstream (see upstream #222)
+Conflicts:      python3-lexicon
 
 %description -n python3-%{pypi_name}
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
@@ -155,6 +167,7 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %changelog
 * Fri Dec 14 2018 Eli Young <elyscape@gmail.com> - 3.0.6-1
 - Update to 3.0.6
+- Declare conflict with python-lexicon
 
 * Wed Nov 14 2018 Eli Young <elyscape@gmail.com> - 3.0.2-2
 - Fix dependencies on Fedora 28
