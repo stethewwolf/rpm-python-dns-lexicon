@@ -6,6 +6,12 @@
 %bcond_without python3
 %endif
 
+%if 0%{?fedora} && 0%{?fedora} >= 30
+%bcond_with python2
+%else
+%bcond_without python2
+%endif
+
 Name:           python-%{pypi_name}
 Version:        3.0.6
 Release:        1%{?dist}
@@ -22,6 +28,7 @@ Patch0:         0000-remove-shebang.patch
 Patch1:         0001-fix-requirements.patch
 %endif
 
+%if %{with python2}
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-cryptography
@@ -34,6 +41,7 @@ BuildRequires:  python2-tldextract
 BuildRequires:  pyOpenSSL
 %else
 BuildRequires:  python2-pyOpenSSL
+%endif
 %endif
 
 %if %{with python3}
@@ -57,6 +65,7 @@ Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
 standardized way. Lexicon has a CLI but it can also be used as a python
 library.
 
+%if %{with python2}
 %package -n     python2-%{pypi_name}
 Summary:        %{summary}
 %{?python_provide:%python_provide python2-%{pypi_name}}
@@ -89,6 +98,7 @@ standardized way. Lexicon has a CLI but it can also be used as a python
 library.
 
 This is the Python 2 version of the package.
+%endif
 
 %if %{with python3}
 %package -n     python3-%{pypi_name}
@@ -126,15 +136,20 @@ This is the Python 3 version of the package.
 rm -rf %{pypi_name}.egg-info
 
 %build
+%if %{with python2}
 %py2_build
+%endif
+
 %if %{with python3}
 %py3_build
 %endif
 
 %install
+%if %{with python2}
 %py2_install
 install -pm 0755 %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python2_version}
 ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
+%endif
 
 %if %{with python3}
 %py3_install
@@ -142,6 +157,7 @@ install -pm 0755 %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon
 ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
+%if %{with python2}
 %files -n python2-%{pypi_name}
 %license LICENSE
 %doc README.md
@@ -152,6 +168,7 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %{_bindir}/lexicon-%{python2_version}
 %{python2_sitelib}/lexicon
 %{python2_sitelib}/dns_lexicon-%{version}-py?.?.egg-info
+%endif
 
 %if %{with python3}
 %files -n python3-%{pypi_name}
@@ -168,6 +185,7 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 * Fri Dec 14 2018 Eli Young <elyscape@gmail.com> - 3.0.6-1
 - Update to 3.0.6
 - Declare conflict with python-lexicon
+- Remove Python 2 package in Fedora 30+
 
 * Wed Nov 14 2018 Eli Young <elyscape@gmail.com> - 3.0.2-2
 - Fix dependencies on Fedora 28
