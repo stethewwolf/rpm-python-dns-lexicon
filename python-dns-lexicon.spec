@@ -14,7 +14,7 @@
 %endif
 
 Name:           python-%{pypi_name}
-Version:        3.1.5
+Version:        3.2.6
 Release:        1%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
@@ -192,6 +192,38 @@ dependencies necessary to use the easyname provider.
 %endif
 
 %if %{with python2}
+%package -n     python2-%{pypi_name}+gratisdns
+Summary:        Meta-package for python2-%{pypi_name} and gratisdns provider
+%{?python_provide:%python_provide python2-%{pypi_name}+gratisdns}
+
+Requires:       python2-%{pypi_name} = %{version}-%{release}
+
+%if 0%{?rhel7}
+# EL7 has an unversioned name for this package
+Requires:       python-beautifulsoup4
+%else
+Requires:       python2-beautifulsoup4
+%endif
+
+%description -n python2-%{pypi_name}+gratisdns
+This package installs no files. It requires python2-%{pypi_name} and all
+dependencies necessary to use the gratisdns provider.
+%endif
+
+%if %{with python3}
+%package -n     python3-%{pypi_name}+gratisdns
+Summary:        Meta-package for python3-%{pypi_name} and gratisdns provider
+%{?python_provide:%python_provide python3-%{pypi_name}+gratisdns}
+
+Requires:       python3-%{pypi_name} = %{version}-%{release}
+Requires:       python3-beautifulsoup4
+
+%description -n python3-%{pypi_name}+gratisdns
+This package installs no files. It requires python3-%{pypi_name} and all
+dependencies necessary to use the gratisdns provider.
+%endif
+
+%if %{with python2}
 %package -n     python2-%{pypi_name}+henet
 Summary:        Meta-package for python2-%{pypi_name} and Hurricane Electric provider
 %{?python_provide:%python_provide python2-%{pypi_name}+henet}
@@ -364,6 +396,7 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 # Extras meta-packages
 # {{{
 %files -n python2-%{pypi_name}+easyname
+%files -n python2-%{pypi_name}+gratisdns
 %files -n python2-%{pypi_name}+henet
 %files -n python2-%{pypi_name}+plesk
 %files -n python2-%{pypi_name}+route53
@@ -388,6 +421,7 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 # Extras meta-packages
 # {{{
 %files -n python3-%{pypi_name}+easyname
+%files -n python3-%{pypi_name}+gratisdns
 %files -n python3-%{pypi_name}+henet
 %files -n python3-%{pypi_name}+hetzner
 %files -n python3-%{pypi_name}+plesk
@@ -396,6 +430,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Tue May 28 2019 Eli Young <elyscape@gmail.com> - 3.2.6-1
+- Update to 3.2.6 (#1685778)
+
 * Fri Feb 15 2019 Eli Young <elyscape@gmail.com> - 3.1.5-1
 - Update to 3.1.5 (#1671162)
 - Add meta-subpackages for specific providers
