@@ -7,10 +7,17 @@
 %bcond_without python3
 %endif
 
-%if 0%{?fedora} && 0%{?fedora} >= 30
+%if 0%{?fedora} >= 30 || 0%{?rhel} >= 8
 %bcond_with python2
 %else
 %bcond_without python2
+%endif
+
+%if 0%{?rhel} >= 8
+# EPEL8 is currently missing dependencies used by the extras metapackages
+%bcond_with extras
+%else
+%bcond_without extras
 %endif
 
 Name:           python-%{pypi_name}
@@ -46,6 +53,7 @@ BuildRequires:  python2-pyOpenSSL
 
 # Extras requirements
 # {{{
+%if %{with extras}
 %if 0%{?rhel7}
 # EL7 has unversioned names for these packages
 BuildRequires:  python-beautifulsoup4
@@ -58,6 +66,7 @@ BuildRequires:  python2-xmltodict
 
 # EL7 doesn't have a current enough version of this package
 BuildRequires:  python2-dns
+%endif
 %endif
 # }}}
 %endif
@@ -78,10 +87,12 @@ BuildRequires:  python3-pyyaml
 
 # Extras requirements
 # {{{
+%if %{with extras}
 BuildRequires:  python3-beautifulsoup4
 BuildRequires:  python3-boto3
 BuildRequires:  python3-dns
 BuildRequires:  python3-xmltodict
+%endif
 # }}}
 
 %endif
@@ -158,6 +169,7 @@ This is the Python 3 version of the package.
 
 # Extras meta-packages
 # {{{
+%if %{with extras}
 
 %if %{with python2}
 %package -n     python2-%{pypi_name}+easyname
@@ -352,6 +364,8 @@ dependencies necessary to use the Hetzner provider.
 %endif
 # }}}
 %endif
+
+%endif
 # }}}
 
 %prep
@@ -420,18 +434,21 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 
 # Extras meta-packages
 # {{{
+%if %{with extras}
 %files -n python3-%{pypi_name}+easyname
 %files -n python3-%{pypi_name}+gratisdns
 %files -n python3-%{pypi_name}+henet
 %files -n python3-%{pypi_name}+hetzner
 %files -n python3-%{pypi_name}+plesk
 %files -n python3-%{pypi_name}+route53
+%endif
 # }}}
 %endif
 
 %changelog
 * Mon Oct 07 2019 Eli Young <elyscape@gmail.com> - 3.3.4-1
 - Update to 3.3.4 (#1725208)
+- Support EPEL8 builds
 
 * Thu Oct 03 2019 Miro Hrončok <mhroncok@redhat.com> - 3.2.8-4
 - Rebuilt for Python 3.8.0rc1 (#1748018)
