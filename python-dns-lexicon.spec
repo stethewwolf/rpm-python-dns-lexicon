@@ -22,7 +22,7 @@
 
 Name:           python-%{pypi_name}
 Version:        3.3.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
@@ -446,6 +446,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Tue Oct 08 2019 Eli Young <elyscape@gmail.com> - 3.3.4-2
+- Rebuild due to Koji issues
+
 * Mon Oct 07 2019 Eli Young <elyscape@gmail.com> - 3.3.4-1
 - Update to 3.3.4 (#1725208)
 - Support EPEL8 builds
