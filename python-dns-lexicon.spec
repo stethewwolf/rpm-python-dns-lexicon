@@ -22,7 +22,7 @@
 
 Name:           python-%{pypi_name}
 Version:        3.3.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
@@ -446,6 +446,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 3.3.4-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Tue Oct 08 2019 Eli Young <elyscape@gmail.com> - 3.3.4-2
 - Rebuild due to Koji issues
 
