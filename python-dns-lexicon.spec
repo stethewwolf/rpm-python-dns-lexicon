@@ -27,7 +27,7 @@ Summary:        Manipulate DNS records on various DNS providers in a standardize
 
 License:        MIT
 URL:            https://github.com/AnalogJ/lexicon
-Source0:        https://files.pythonhosted.org/packages/source/d/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
+Source0:        %{pypi_source}
 BuildArch:      noarch
 
 Patch0:         0000-remove-shebang.patch
