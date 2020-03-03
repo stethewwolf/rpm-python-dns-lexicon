@@ -78,12 +78,7 @@ BuildRequires:  python3-cryptography
 BuildRequires:  python3-future
 BuildRequires:  python3-pyOpenSSL
 BuildRequires:  python3-tldextract
-
-%if 0%{?fedora} && 0%{?fedora} <= 28
-BuildRequires:  python3-PyYAML
-%else
 BuildRequires:  python3-pyyaml
-%endif
 
 # Extras requirements
 # {{{
@@ -148,12 +143,7 @@ Requires:       python3-requests
 Requires:       python3-setuptools
 Requires:       python3-pyOpenSSL
 Requires:       python3-tldextract
-
-%if 0%{?fedora} && 0%{?fedora} <= 28
-Requires:       python3-PyYAML
-%else
 Requires:       python3-pyyaml
-%endif
 
 # Both packages install a Python module named lexicon
 # TODO: Remove this once resolved upstream (see upstream #222)
