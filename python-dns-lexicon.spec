@@ -22,7 +22,7 @@
 
 Name:           python-%{pypi_name}
 Version:        3.3.17
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
@@ -436,6 +436,9 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %endif
 
 %changelog
+* Wed Mar 04 2020 Felix Schwarz <fschwarz@fedoraproject.org> - 3.3.17-2
+- add missing sources
+
 * Tue Mar 03 2020 Felix Schwarz <fschwarz@fedoraproject.org> - 3.3.17-1
 - Update to 3.3.17 (#1764339)
 
