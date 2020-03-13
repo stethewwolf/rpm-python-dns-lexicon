@@ -31,10 +31,7 @@ Source0:        %{pypi_source}
 BuildArch:      noarch
 
 Patch0:         0000-remove-shebang.patch
-
-%if 0%{?rhel7}
 Patch1:         0001-fix-requirements.patch
-%endif
 
 %if %{with python2}
 BuildRequires:  python2-devel
@@ -359,7 +356,11 @@ dependencies necessary to use the Hetzner provider.
 # }}}
 
 %prep
-%autosetup -p1 -n %{pypi_name}-%{version}
+%setup -n %{pypi_name}-%{version}
+%patch0 -p1
+%if 0%{?rhel7}
+%patch1 -p1
+%endif
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
