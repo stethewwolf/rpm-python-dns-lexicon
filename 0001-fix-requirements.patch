@@ -1,0 +1,13 @@
+diff --git a/setup.py b/setup.py
+index b4b3865..6eda18d 100644
+--- a/setup.py
++++ b/setup.py
+@@ -82,7 +82,7 @@ setup(
+     # requirements files see:
+     # https://packaging.python.org/en/latest/requirements.html
+     install_requires=[
+-        'requests[security]',
++        'requests',
+         'tldextract',
+         'future',
+         'cryptography',
