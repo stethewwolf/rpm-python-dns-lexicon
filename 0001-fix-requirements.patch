@@ -1,8 +1,8 @@
 diff --git a/setup.py b/setup.py
-index b4b3865..6eda18d 100644
+index 7d68954..0c211c4 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -82,7 +82,7 @@ setup(
+@@ -113,14 +113,14 @@ setup(
      # requirements files see:
      # https://packaging.python.org/en/latest/requirements.html
      install_requires=[
@@ -11,3 +11,11 @@ index b4b3865..6eda18d 100644
          'tldextract',
          'future',
          'cryptography',
+         'pyyaml',
+     ],
+ 
+-    extras_require=extras_require,
++    #extras_require=extras_require,
+ 
+     # To provide executable scripts, use entry points in preference to the
+     # "scripts" keyword. Entry points provide cross-platform support and allow
