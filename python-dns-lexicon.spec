@@ -85,7 +85,7 @@ BuildRequires:  python3-pyyaml
 %if %{with extras}
 BuildRequires:  python3-beautifulsoup4
 BuildRequires:  python3-boto3
-BuildRequires:  python3-dns
+BuildRequires:  python3-dns >= 1.15.0
 BuildRequires:  python3-xmltodict
 %endif
 # }}}
@@ -332,7 +332,7 @@ Summary:        Meta-package for python2-%{pypi_name} and Hetzner provider
 
 Requires:       python2-%{pypi_name} = %{version}-%{release}
 Requires:       python2-beautifulsoup4
-Requires:       python2-dns
+Requires:       python2-dns >= 1.15.0
 
 %description -n python2-%{pypi_name}+hetzner
 This package installs no files. It requires python2-%{pypi_name} and all
@@ -346,7 +346,7 @@ Summary:        Meta-package for python3-%{pypi_name} and Hetzner provider
 
 Requires:       python3-%{pypi_name} = %{version}-%{release}
 Requires:       python3-beautifulsoup4
-Requires:       python3-dns
+Requires:       python3-dns >= 1.15.0
 
 %description -n python3-%{pypi_name}+hetzner
 This package installs no files. It requires python3-%{pypi_name} and all
