@@ -1,16 +1,16 @@
 %global pypi_name dns-lexicon
 
-%if 0%{?rhel} && 0%{?rhel} <= 7
+%if 0%{?rhel} && 0%{?rhel} == 7
 %global rhel7 1
-%bcond_with python3
-%else
-%bcond_without python3
 %endif
 
-%if 0%{?fedora} >= 30 || 0%{?rhel} >= 8
-%bcond_with python2
-%else
+%if 0%{?rhel7}
+%bcond_with python3
 %bcond_without python2
+%else
+# RHEL 8/Fedora: Python 3 only
+%bcond_without python3
+%bcond_with python2
 %endif
 
 %if 0%{?rhel} >= 8
@@ -40,30 +40,17 @@ BuildRequires:  python2-cryptography
 BuildRequires:  python2-future
 BuildRequires:  python2-pyyaml
 BuildRequires:  python2-tldextract
-
-%if 0%{?rhel7}
 # EL7 has an unversioned name for this package
 BuildRequires:  pyOpenSSL
-%else
-BuildRequires:  python2-pyOpenSSL
-%endif
 
 # Extras requirements
 # {{{
 %if %{with extras}
-%if 0%{?rhel7}
 # EL7 has unversioned names for these packages
 BuildRequires:  python-beautifulsoup4
 BuildRequires:  python-boto3
 BuildRequires:  python-xmltodict
-%else
-BuildRequires:  python2-beautifulsoup4
-BuildRequires:  python2-boto3
-BuildRequires:  python2-xmltodict
-
-# EL7 doesn't have a current enough version of this package
-BuildRequires:  python2-dns
-%endif
+# EL7 doesn't have a current enough version of python2-dns
 %endif
 # }}}
 %endif
@@ -105,21 +92,12 @@ Requires:       python2-requests
 Requires:       python2-setuptools
 Requires:       python2-pyyaml
 Requires:       python2-tldextract
-
-%if 0%{?rhel7}
 # EL7 has an unversioned name for this package
 Requires:       pyOpenSSL
-%else
-Requires:       python2-pyOpenSSL
-%endif
 
 # Both packages install a Python module named lexicon
 # TODO: Remove this once resolved upstream (see upstream #222)
-%if 0%{?rhel7}
 Conflicts:      python-lexicon
-%else
-Conflicts:      python2-lexicon
-%endif
 
 %description -n python2-%{pypi_name}
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
@@ -164,13 +142,8 @@ Summary:        Meta-package for python2-%{pypi_name} and easyname provider
 %{?python_provide:%python_provide python2-%{pypi_name}+easyname}
 
 Requires:       python2-%{pypi_name} = %{version}-%{release}
-
-%if 0%{?rhel7}
 # EL7 has an unversioned name for this package
 Requires:       python-beautifulsoup4
-%else
-Requires:       python2-beautifulsoup4
-%endif
 
 %description -n python2-%{pypi_name}+easyname
 This package installs no files. It requires python2-%{pypi_name} and all
@@ -196,13 +169,8 @@ Summary:        Meta-package for python2-%{pypi_name} and gratisdns provider
 %{?python_provide:%python_provide python2-%{pypi_name}+gratisdns}
 
 Requires:       python2-%{pypi_name} = %{version}-%{release}
-
-%if 0%{?rhel7}
 # EL7 has an unversioned name for this package
 Requires:       python-beautifulsoup4
-%else
-Requires:       python2-beautifulsoup4
-%endif
 
 %description -n python2-%{pypi_name}+gratisdns
 This package installs no files. It requires python2-%{pypi_name} and all
@@ -228,13 +196,8 @@ Summary:        Meta-package for python2-%{pypi_name} and Hurricane Electric pro
 %{?python_provide:%python_provide python2-%{pypi_name}+henet}
 
 Requires:       python2-%{pypi_name} = %{version}-%{release}
-
-%if 0%{?rhel7}
 # EL7 has an unversioned name for this package
 Requires:       python-beautifulsoup4
-%else
-Requires:       python2-beautifulsoup4
-%endif
 
 %description -n python2-%{pypi_name}+henet
 This package installs no files. It requires python2-%{pypi_name} and all
@@ -260,13 +223,8 @@ Summary:        Meta-package for python2-%{pypi_name} and Plesk provider
 %{?python_provide:%python_provide python2-%{pypi_name}+plesk}
 
 Requires:       python2-%{pypi_name} = %{version}-%{release}
-
-%if 0%{?rhel7}
 # EL7 has an unversioned name for this package
 Requires:       python-xmltodict
-%else
-Requires:       python2-xmltodict
-%endif
 
 %description -n python2-%{pypi_name}+plesk
 This package installs no files. It requires python2-%{pypi_name} and all
@@ -292,13 +250,8 @@ Summary:        Meta-package for python2-%{pypi_name} and Route 53 provider
 %{?python_provide:%python_provide python2-%{pypi_name}+route53}
 
 Requires:       python2-%{pypi_name} = %{version}-%{release}
-
-%if 0%{?rhel7}
 # EL7 has an unversioned name for this package
 Requires:       python-boto3
-%else
-Requires:       python2-boto3
-%endif
 
 %description -n python2-%{pypi_name}+route53
 This package installs no files. It requires python2-%{pypi_name} and all
@@ -405,11 +358,6 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %files -n python2-%{pypi_name}+henet
 %files -n python2-%{pypi_name}+plesk
 %files -n python2-%{pypi_name}+route53
-
-%if ! 0%{?rhel7}
-# EL7 does not have the necessary dependencies for this meta-package
-%files -n python2-%{pypi_name}+hetzner
-%endif
 # }}}
 %endif
 
