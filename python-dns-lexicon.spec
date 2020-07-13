@@ -369,7 +369,7 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 %{_bindir}/lexicon-3
 %{_bindir}/lexicon-%{python3_version}
 %{python3_sitelib}/lexicon
-%{python3_sitelib}/dns_lexicon-%{version}-py?.?.egg-info
+%{python3_sitelib}/dns_lexicon-%{version}-py%{python3_version}.egg-info
 
 # Extras meta-packages
 # {{{
