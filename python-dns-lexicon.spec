@@ -9,15 +9,6 @@ Version:        3.3.17
 %global rhel7 1
 %endif
 
-%if 0%{?rhel7}
-%bcond_with python3
-%bcond_without python2
-%else
-# RHEL 8/Fedora: Python 3 only
-%bcond_without python3
-%bcond_with python2
-%endif
-
 %if 0%{?rhel} >= 8
 # EPEL8 is currently missing dependencies used by the extras metapackages
 %bcond_with extras
@@ -38,29 +29,6 @@ BuildArch:      noarch
 Patch0:         0000-remove-shebang.patch
 Patch1:         0001-fix-requirements.patch
 
-%if %{with python2}
-BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
-BuildRequires:  python2-cryptography
-BuildRequires:  python2-future
-BuildRequires:  python2-pyyaml
-BuildRequires:  python2-tldextract
-# EL7 has an unversioned name for this package
-BuildRequires:  pyOpenSSL
-
-# Extras requirements
-# {{{
-%if %{with extras}
-# EL7 has unversioned names for these packages
-BuildRequires:  python-beautifulsoup4
-BuildRequires:  python-boto3
-BuildRequires:  python-xmltodict
-# EL7 doesn't have a current enough version of python2-dns
-%endif
-# }}}
-%endif
-
-%if %{with python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-cryptography
@@ -83,40 +51,11 @@ BuildRequires:  python3-xmltodict
 %endif
 # }}}
 
-%endif
-
 %description
 Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
 standardized way. Lexicon has a CLI but it can also be used as a python
 library.
 
-%if %{with python2}
-%package -n     python2-%{pypi_name}
-Summary:        %{summary}
-%{?python_provide:%python_provide python2-%{pypi_name}}
-
-Requires:       python2-cryptography
-Requires:       python2-future
-Requires:       python2-requests
-Requires:       python2-setuptools
-Requires:       python2-pyyaml
-Requires:       python2-tldextract
-# EL7 has an unversioned name for this package
-Requires:       pyOpenSSL
-
-# Both packages install a Python module named lexicon
-# TODO: Remove this once resolved upstream (see upstream #222)
-Conflicts:      python-lexicon
-
-%description -n python2-%{pypi_name}
-Lexicon provides a way to manipulate DNS records on multiple DNS providers in a
-standardized way. Lexicon has a CLI but it can also be used as a python
-library.
-
-This is the Python 2 version of the package.
-%endif
-
-%if %{with python3}
 %package -n     python3-%{pypi_name}
 Summary:        %{summary}
 %{?python_provide:%python_provide python3-%{pypi_name}}
@@ -139,27 +78,11 @@ standardized way. Lexicon has a CLI but it can also be used as a python
 library.
 
 This is the Python 3 version of the package.
-%endif
 
 # Extras meta-packages
 # {{{
 %if %{with extras}
 
-%if %{with python2}
-%package -n     python2-%{pypi_name}+easyname
-Summary:        Meta-package for python2-%{pypi_name} and easyname provider
-%{?python_provide:%python_provide python2-%{pypi_name}+easyname}
-
-Requires:       python2-%{pypi_name} = %{version}-%{release}
-# EL7 has an unversioned name for this package
-Requires:       python-beautifulsoup4
-
-%description -n python2-%{pypi_name}+easyname
-This package installs no files. It requires python2-%{pypi_name} and all
-dependencies necessary to use the easyname provider.
-%endif
-
-%if %{with python3}
 %package -n     python3-%{pypi_name}+easyname
 Summary:        Meta-package for python3-%{pypi_name} and easyname provider
 %{?python_provide:%python_provide python3-%{pypi_name}+easyname}
@@ -170,23 +93,8 @@ Requires:       python3-beautifulsoup4
 %description -n python3-%{pypi_name}+easyname
 This package installs no files. It requires python3-%{pypi_name} and all
 dependencies necessary to use the easyname provider.
-%endif
 
-%if %{with python2}
-%package -n     python2-%{pypi_name}+gratisdns
-Summary:        Meta-package for python2-%{pypi_name} and gratisdns provider
-%{?python_provide:%python_provide python2-%{pypi_name}+gratisdns}
 
-Requires:       python2-%{pypi_name} = %{version}-%{release}
-# EL7 has an unversioned name for this package
-Requires:       python-beautifulsoup4
-
-%description -n python2-%{pypi_name}+gratisdns
-This package installs no files. It requires python2-%{pypi_name} and all
-dependencies necessary to use the gratisdns provider.
-%endif
-
-%if %{with python3}
 %package -n     python3-%{pypi_name}+gratisdns
 Summary:        Meta-package for python3-%{pypi_name} and gratisdns provider
 %{?python_provide:%python_provide python3-%{pypi_name}+gratisdns}
@@ -197,23 +105,8 @@ Requires:       python3-beautifulsoup4
 %description -n python3-%{pypi_name}+gratisdns
 This package installs no files. It requires python3-%{pypi_name} and all
 dependencies necessary to use the gratisdns provider.
-%endif
 
-%if %{with python2}
-%package -n     python2-%{pypi_name}+henet
-Summary:        Meta-package for python2-%{pypi_name} and Hurricane Electric provider
-%{?python_provide:%python_provide python2-%{pypi_name}+henet}
 
-Requires:       python2-%{pypi_name} = %{version}-%{release}
-# EL7 has an unversioned name for this package
-Requires:       python-beautifulsoup4
-
-%description -n python2-%{pypi_name}+henet
-This package installs no files. It requires python2-%{pypi_name} and all
-dependencies necessary to use the Hurricane Electric provider.
-%endif
-
-%if %{with python3}
 %package -n     python3-%{pypi_name}+henet
 Summary:        Meta-package for python3-%{pypi_name} and Hurricane Electric provider
 %{?python_provide:%python_provide python3-%{pypi_name}+henet}
@@ -226,21 +119,7 @@ This package installs no files. It requires python3-%{pypi_name} and all
 dependencies necessary to use the Hurricane Electric provider.
 %endif
 
-%if %{with python2}
-%package -n     python2-%{pypi_name}+plesk
-Summary:        Meta-package for python2-%{pypi_name} and Plesk provider
-%{?python_provide:%python_provide python2-%{pypi_name}+plesk}
 
-Requires:       python2-%{pypi_name} = %{version}-%{release}
-# EL7 has an unversioned name for this package
-Requires:       python-xmltodict
-
-%description -n python2-%{pypi_name}+plesk
-This package installs no files. It requires python2-%{pypi_name} and all
-dependencies necessary to use the Plesk provider.
-%endif
-
-%if %{with python3}
 %package -n     python3-%{pypi_name}+plesk
 Summary:        Meta-package for python3-%{pypi_name} and Plesk provider
 %{?python_provide:%python_provide python3-%{pypi_name}+plesk}
@@ -251,23 +130,8 @@ Requires:       python3-xmltodict
 %description -n python3-%{pypi_name}+plesk
 This package installs no files. It requires python3-%{pypi_name} and all
 dependencies necessary to use the Plesk provider.
-%endif
 
-%if %{with python2}
-%package -n     python2-%{pypi_name}+route53
-Summary:        Meta-package for python2-%{pypi_name} and Route 53 provider
-%{?python_provide:%python_provide python2-%{pypi_name}+route53}
 
-Requires:       python2-%{pypi_name} = %{version}-%{release}
-# EL7 has an unversioned name for this package
-Requires:       python-boto3
-
-%description -n python2-%{pypi_name}+route53
-This package installs no files. It requires python2-%{pypi_name} and all
-dependencies necessary to use the Route 53 provider.
-%endif
-
-%if %{with python3}
 %package -n     python3-%{pypi_name}+route53
 Summary:        Meta-package for python3-%{pypi_name} and Route 53 provider
 %{?python_provide:%python_provide python3-%{pypi_name}+route53}
@@ -278,27 +142,11 @@ Requires:       python3-boto3
 %description -n python3-%{pypi_name}+route53
 This package installs no files. It requires python3-%{pypi_name} and all
 dependencies necessary to use the Route 53 provider.
-%endif
 
 %if ! 0%{?rhel7}
 # EL7 does not have the dependencies necessary for this meta-package
 # {{{
 
-%if %{with python2}
-%package -n     python2-%{pypi_name}+hetzner
-Summary:        Meta-package for python2-%{pypi_name} and Hetzner provider
-%{?python_provide:%python_provide python2-%{pypi_name}+hetzner}
-
-Requires:       python2-%{pypi_name} = %{version}-%{release}
-Requires:       python2-beautifulsoup4
-Requires:       python2-dns >= 1.15.0
-
-%description -n python2-%{pypi_name}+hetzner
-This package installs no files. It requires python2-%{pypi_name} and all
-dependencies necessary to use the Hetzner provider.
-%endif
-
-%if %{with python3}
 %package -n     python3-%{pypi_name}+hetzner
 Summary:        Meta-package for python3-%{pypi_name} and Hetzner provider
 %{?python_provide:%python_provide python3-%{pypi_name}+hetzner}
@@ -310,12 +158,9 @@ Requires:       python3-dns >= 1.15.0
 %description -n python3-%{pypi_name}+hetzner
 This package installs no files. It requires python3-%{pypi_name} and all
 dependencies necessary to use the Hetzner provider.
-%endif
 # }}}
 %endif
 
-%endif
-# }}}
 
 %prep
 %setup -n lexicon-%{version}
@@ -327,13 +172,7 @@ dependencies necessary to use the Hetzner provider.
 rm -rf %{pypi_name}.egg-info
 
 %build
-%if %{with python2}
-%py2_build
-%endif
-
-%if %{with python3}
 %py3_build
-%endif
 
 %check
 # AutoProviderTests: unknown failure - exclude to get suite passing for now
@@ -345,50 +184,16 @@ rm -rf %{pypi_name}.egg-info
 # - GransyProviderTests
 # - LocalzoneProviderTests
 TEST_SELECTOR="not AutoProviderTests and not TransipProviderTests and not SoftLayerProviderTests and not NamecheapProviderTests and not NamecheapManagedProviderTests and not GransyProviderTests and not LocalzoneProviderTests"
-%if %{with python2}
-# no tests with Python 2 as EPEL 7 does not provide the pytest-vcr package
-%endif
-%if 0%{?fedora} && %{with python3}
+%if 0%{?fedora}
 # EPEL 8 does not provide the python3-pytest-vcr package
 py.test-3 -v -k "${TEST_SELECTOR}" lexicon
 %endif
 
 %install
-%if %{with python2}
-%py2_install
-install -pm 0755 %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python2_version}
-ln -s %{_bindir}/lexicon-%{python2_version} %{buildroot}/%{_bindir}/lexicon-2
-%endif
-
-%if %{with python3}
 %py3_install
 install -pm 0755 %{buildroot}/%{_bindir}/lexicon %{buildroot}/%{_bindir}/lexicon-%{python3_version}
 ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
-%endif
 
-%if %{with python2}
-%files -n python2-%{pypi_name}
-%license LICENSE
-%doc README.md
-%if ! %{with python3}
-%{_bindir}/lexicon
-%endif
-%{_bindir}/lexicon-2
-%{_bindir}/lexicon-%{python2_version}
-%{python2_sitelib}/lexicon
-%{python2_sitelib}/dns_lexicon-%{version}-py?.?.egg-info
-
-# Extras meta-packages
-# {{{
-%files -n python2-%{pypi_name}+easyname
-%files -n python2-%{pypi_name}+gratisdns
-%files -n python2-%{pypi_name}+henet
-%files -n python2-%{pypi_name}+plesk
-%files -n python2-%{pypi_name}+route53
-# }}}
-%endif
-
-%if %{with python3}
 %files -n python3-%{pypi_name}
 %license LICENSE
 %doc README.md
@@ -421,7 +226,6 @@ ln -s %{_bindir}/lexicon-%{python3_version} %{buildroot}/%{_bindir}/lexicon-3
 
 %endif
 # }}}
-%endif
 
 %changelog
 * Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 3.3.17-5
