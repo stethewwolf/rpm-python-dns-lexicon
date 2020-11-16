@@ -1,9 +1,9 @@
 diff --git a/lexicon/cli.py b/lexicon/cli.py
-index dbef1ae..32a0f6f 100644
+index d2e2a41..3b6ba67 100644
 --- a/lexicon/cli.py
 +++ b/lexicon/cli.py
 @@ -1,4 +1,3 @@
 -#!/usr/bin/env python
  """Module for Lexicon command-line interface"""
  from __future__ import absolute_import, print_function
- import json
+ 
