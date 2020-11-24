@@ -1,6 +1,6 @@
 
 %global forgeurl    https://github.com/AnalogJ/lexicon
-Version:            3.5.1
+Version:            3.5.2
 %forgemeta
 
 %global pypi_name dns-lexicon
@@ -185,6 +185,9 @@ rm -rf %{buildroot}%{python3_sitelib}/lexicon/tests
 # }}}
 
 %changelog
+* Tue Nov 24 2020 Felix Schwarz <fschwarz@fedoraproject.org> - 3.5.2-1
+- update to 3.5.2
+
 * Mon Nov 16 2020 Felix Schwarz <fschwarz@fedoraproject.org> - 3.5.1-1
 - update to 3.5.1
 
