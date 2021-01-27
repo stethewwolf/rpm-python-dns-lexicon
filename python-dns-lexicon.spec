@@ -17,7 +17,7 @@ Version:            3.5.3
 %endif
 
 Name:           python-%{pypi_name}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Manipulate DNS records on various DNS providers in a standardized/agnostic way
 
 License:        MIT
@@ -185,6 +185,9 @@ rm -rf %{buildroot}%{python3_sitelib}/lexicon/tests
 # }}}
 
 %changelog
+* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 3.5.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Tue Jan  5 2021 Felix Schwarz <fschwarz@fedoraproject.org> - 3.5.3-1
 - update to 3.5.3
 
